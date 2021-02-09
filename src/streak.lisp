@@ -10,7 +10,7 @@
          (args (nthcdr 2 argv)))
     (case command
       ("undo" t)
-      ("add" t)
+      ("create" t)
       ("destroy" t)
       (otherwise
         (if args
