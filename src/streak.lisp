@@ -1,5 +1,7 @@
 (defpackage :streak
-  (:use :common-lisp :help)
+  (:use :common-lisp)
+  (:import-from :alexandria :switch)
+  (:import-from :help :print-usage)
   (:export #:main))
 
 (in-package :streak)
@@ -8,11 +10,11 @@
   (let* ((argv sb-ext:*posix-argv*)
          (command (nth 1 argv))
          (args (nthcdr 2 argv)))
-    (case command
+    (switch (command :test #'string=)
       ("undo" t)
       ("create" t)
       ("destroy" t)
       (otherwise
-        (if args
-          (help:print-usage)
+        (if (or args (not command))
+          (print-usage)
           t)))))
