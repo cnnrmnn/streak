@@ -11,4 +11,4 @@
   (format t "   <name>~%")
   (format t "   undo <name>~%")
   (format t "   add <name> {day | week | month} [interval]~%")
-  (format t "   remove <name>~%"))
+  (format t "   destroy <name>~%"))
