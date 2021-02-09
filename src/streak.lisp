@@ -5,4 +5,14 @@
 (in-package :streak)
 
 (defun main ()
-  (help:print-usage))
+  (let* ((argv sb-ext:*posix-argv*)
+         (command (nth 1 argv))
+         (args (nthcdr 2 argv)))
+    (case command
+      ("undo" t)
+      ("add" t)
+      ("destroy" t)
+      (otherwise
+        (if args
+          (help:print-usage)
+          t)))))
