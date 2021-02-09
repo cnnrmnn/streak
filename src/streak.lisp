@@ -1,7 +1,8 @@
 (defpackage :streak
-  (:use :common-lisp)
+  (:use :common-lisp :help)
   (:export #:main))
 
 (in-package :streak)
 
-(defun main ())
+(defun main ()
+  (help:print-usage))
