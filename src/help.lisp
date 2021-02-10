@@ -10,5 +10,6 @@
   (format t "commands:~%")
   (format t "   <name>~%")
   (format t "   undo <name>~%")
-  (format t "   create <name> {day | week | month} [interval]~%")
+  (format t "   create <name> <interval> ~
+                  {hour(s) | day(s) | week(s) | month(s)}~%")
   (format t "   destroy <name>~%"))
