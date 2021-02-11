@@ -7,10 +7,9 @@
 
 (in-package :streak)
 
-(defun main ()
-  (let* ((argv sb-ext:*posix-argv*)
-         (command (nth 1 argv))
-         (args (nthcdr 2 argv)))
+(defun main (argv)
+  (let ((command (nth 1 argv))
+        (args (nthcdr 2 argv)))
     (switch (command :test #'string=)
       ("undo" t)
       ("create" (create args))

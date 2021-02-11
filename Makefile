@@ -1,6 +1,5 @@
-lisp = sbcl
+quicklisp_path = ~/.quicklisp/dists/quicklisp/software
 
 build:
-	$(lisp)	--eval '(ql:quickload :streak)' \
-		--eval '(asdf:make :streak)' \
-		--eval '(quit)'
+	buildapp --output streak --entry streak:main --load-system streak \
+		--asdf-path . --asdf-tree ${quicklisp_path} --compress-core
