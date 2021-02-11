@@ -2,6 +2,7 @@
   (:use :common-lisp)
   (:import-from :alexandria :switch)
   (:import-from :help :print-usage)
+  (:import-from :create :create)
   (:export #:main))
 
 (in-package :streak)
@@ -12,7 +13,7 @@
          (args (nthcdr 2 argv)))
     (switch (command :test #'string=)
       ("undo" t)
-      ("create" t)
+      ("create" (create args))
       ("destroy" t)
       (otherwise
         (if (or args (not command))
