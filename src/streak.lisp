@@ -11,7 +11,6 @@
   (let ((command (nth 1 argv))
         (args (nthcdr 2 argv)))
     (switch (command :test #'string=)
-      ("undo" t)
       ("create" (create args))
       ("destroy" t)
       (otherwise
