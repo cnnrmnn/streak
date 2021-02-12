@@ -1,7 +1,7 @@
 (defpackage :streak
   (:use :common-lisp)
   (:import-from :alexandria :switch)
-  (:import-from :help :print-usage)
+  (:import-from :help :print-usage-if-true)
   (:import-from :create :create)
   (:import-from :extend :extend)
   (:export #:main))
@@ -15,6 +15,5 @@
       ("create" (create args))
       ("destroy" t)
       (otherwise
-        (if (or args (not command))
-          (print-usage)
+        (print-usage-if-true (or args (not command))
           (extend command))))))
