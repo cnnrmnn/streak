@@ -1,7 +1,6 @@
 (defpackage :help
   (:use :common-lisp)
-  (:export #:print-usage
-           #:print-if-true
+  (:export #:print-if-true
            #:print-usage-if-true))
 
 (in-package :help)
