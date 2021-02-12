@@ -6,6 +6,7 @@
                   :components ((:file "help")
                                (:file "file")
                                (:file "create")
+                               (:file "destroy")
                                (:file "extend")
                                (:file "streak"))))
   :build-operation "program-op"

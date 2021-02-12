@@ -3,6 +3,7 @@
   (:import-from :alexandria :switch)
   (:import-from :help :print-usage-if-true)
   (:import-from :create :create)
+  (:import-from :destroy :destroy)
   (:import-from :extend :extend)
   (:export #:main))
 
@@ -13,7 +14,7 @@
         (args (nthcdr 2 argv)))
     (switch (command :test #'string=)
       ("create" (create args))
-      ("destroy" t)
+      ("destroy" (destroy args))
       (otherwise
         (print-usage-if-true (or args (not command))
           (extend command))))))
