@@ -6,6 +6,7 @@
                   :components ((:file "help")
                                (:file "file")
                                (:file "create")
+                               (:file "extend")
                                (:file "streak"))))
   :build-operation "program-op"
   :build-pathname "streak"

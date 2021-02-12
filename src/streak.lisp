@@ -3,6 +3,7 @@
   (:import-from :alexandria :switch)
   (:import-from :help :print-usage)
   (:import-from :create :create)
+  (:import-from :extend :extend)
   (:export #:main))
 
 (in-package :streak)
@@ -16,4 +17,4 @@
       (otherwise
         (if (or args (not command))
           (print-usage)
-          t)))))
+          (extend command))))))

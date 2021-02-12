@@ -1,0 +1,42 @@
+(defpackage :extend
+  (:use :common-lisp)
+  (:import-from :file :get-streak-file
+                      :parse-json-from-file
+                      :encode-json-dom)
+  (:import-from :help :print-if-false)
+  (:export #:extend))
+
+(in-package :extend)
+
+(defun extend-streak (streak streak-ht)
+  (let ((extended (gethash "extended" streak-ht))
+        (interval (gethash "interval" streak-ht))
+        (length (gethash "length" streak-ht)))
+    (setf (gethash "extended" streak-ht)
+          (+ extended interval))
+    (setf (gethash "length" streak-ht)
+          (incf length))
+    (format t "Extended streak \"~A\" to length ~A.~%" streak length)))
+
+(defun break-streak (streak streak-ht)
+  (let ((length (gethash "length" streak-ht)))
+    (setf (gethash "active" streak-ht) nil)
+    (format t "Streak \"~A\" broke at length ~A.~%" streak length)))
+
+(defun extend (streak)
+  (let ((streak-file (get-streak-file streak)))
+    (let ((streak-ht (parse-json-from-file streak-file)))
+      (print-if-false streak-ht ("Streak \"~A\" does not exist.~%" streak)
+        (print-if-false (gethash "active" streak-ht)
+                        ("Streak \"~A\" is broken.~%" streak)
+          (let ((extended (gethash "extended" streak-ht))
+                (interval (gethash "interval" streak-ht))
+                (length (gethash "length" streak-ht))
+                (time (get-universal-time)))
+            (print-if-false (> time extended)
+                            ("Streak \"~A\" was already extended.~%" streak)
+              (if (< (- (get-universal-time) extended)
+                     interval)
+                (extend-streak streak streak-ht)
+                (break-streak streak streak-ht))
+              (encode-json-dom streak-ht streak-file))))))))
