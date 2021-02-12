@@ -40,4 +40,3 @@
         (format t "Interval \"~A\" is invalid (must be an integer).~%"
                 (second args))))
       (print-usage)))
-
