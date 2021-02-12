@@ -12,9 +12,9 @@
 (defun to-hours (interval unit)
   (switch (unit :test #'(lambda (x y)
                           (member x y :test #'string=)))
-    ('("hour" "hours") interval)
-    ('("day" "days") (* interval 24))
-    ('("week" "weeks") (* interval 168))
+    ('("hour" "hours") (* interval 3600))
+    ('("day" "days") (* interval 86400))
+    ('("week" "weeks") (* interval 604800))
     (otherwise nil)))
 
 (defun create (args)
