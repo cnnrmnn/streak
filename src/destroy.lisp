@@ -1,6 +1,6 @@
 (defpackage :destroy
   (:use :common-lisp)
-  (:import-from :file :get-streak-file)
+  (:import-from :file :get-streak-namestring)
   (:import-from :help :print-usage-if-true
                       :print-if-true)
   (:export #:destroy))
@@ -10,7 +10,7 @@
 (defun destroy (args)
   (print-usage-if-true (not (eql (length args) 1))
     (let ((streak (first args)))
-      (let ((streak-namestring (get-streak-file streak)))
+      (let ((streak-namestring (get-streak-namestring streak)))
         (let ((streak-path (probe-file streak-namestring)))
           (print-if-true (not streak-path)
                          ("Streak \"~A\" does not exist.~%" streak)

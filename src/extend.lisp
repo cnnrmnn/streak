@@ -1,6 +1,6 @@
 (defpackage :extend
   (:use :common-lisp)
-  (:import-from :file :get-streak-file
+  (:import-from :file :get-streak-namestring
                       :parse-json-from-file
                       :encode-json-dom)
   (:import-from :help :print-if-true)
@@ -24,8 +24,8 @@
     (format t "Streak \"~A\" broke at length ~A.~%" streak length)))
 
 (defun extend (streak)
-  (let ((streak-file (get-streak-file streak)))
-    (let ((streak-ht (parse-json-from-file streak-file)))
+  (let ((streak-namestring (get-streak-namestring streak)))
+    (let ((streak-ht (parse-json-from-file streak-namestring)))
       (print-if-true (not streak-ht) ("Streak \"~A\" does not exist.~%" streak)
         (print-if-true (not (gethash "active" streak-ht))
                        ("Streak \"~A\" is broken.~%" streak)
@@ -39,4 +39,4 @@
                      interval)
                 (extend-streak streak streak-ht)
                 (break-streak streak streak-ht))
-              (encode-json-dom streak-ht streak-file))))))))
+              (encode-json-dom streak-ht streak-namestring))))))))

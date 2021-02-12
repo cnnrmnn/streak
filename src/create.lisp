@@ -2,8 +2,8 @@
   (:use :common-lisp)
   (:import-from :alexandria :switch)
   (:import-from :file :*program-dir*
-                      :get-streak-file
-                      :write-json-object-elements)
+                      :get-streak-namestring
+                      :encode-json-object-elements)
   (:import-from :help :print-if-true
                       :print-usage-if-true)
   (:export #:create))
@@ -27,12 +27,12 @@
                      ("Interval \"~A\" is invalid (must be an integer).~%"
                       (second args))
         (let ((hour-interval (to-hours interval unit))
-              (streak-file (get-streak-file name)))
+              (streak-namestring (get-streak-namestring name)))
           (print-if-true (not hour-interval) ("Unit \"~A\" is invalid.~%" unit)
-            (print-if-true (probe-file streak-file)
+            (print-if-true (probe-file streak-namestring)
                            ("Streak \"~A\" already exists.~%" name)
               (ensure-directories-exist *program-dir*)
-              (write-json-object-elements streak-file
+              (encode-json-object-elements streak-namestring
                 "active" t
                 "interval" hour-interval
                 "created" (get-universal-time)

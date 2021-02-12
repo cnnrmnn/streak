@@ -6,16 +6,16 @@
                        :with-output
                        :with-object)
   (:export #:*program-dir*
-           #:get-streak-file
+           #:get-streak-namestring
            #:parse-json-from-file
            #:encode-json-dom
-           #:write-json-object-elements))
+           #:encode-json-object-elements))
 
 (in-package :file)
 
 (defvar *program-dir* (uiop:native-namestring "~/.streak/"))
 
-(defun get-streak-file (name)
+(defun get-streak-namestring (name)
   (format nil "~A~A.json" *program-dir* name))
 
 (defun parse-json-from-file (namestring)
@@ -32,9 +32,9 @@
                        :if-does-not-exist :create)
     (encode json-dom str)))
 
-(defmacro write-json-object-elements (file &rest elements)
+(defmacro encode-json-object-elements (namestring &rest elements)
   (let ((str (gensym)))
-    `(with-open-file (,str ,file
+    `(with-open-file (,str ,namestring
                           :direction :output
                           :if-does-not-exist :create)
        (with-output (,str)
