@@ -1,6 +1,7 @@
 (defpackage :help
   (:use :common-lisp)
-  (:export #:print-usage))
+  (:export #:print-usage
+           #:print-if-false))
 
 (in-package :help)
 
@@ -12,3 +13,8 @@
   (format t "   create <name> <interval> ~
                   {hour(s) | day(s) | week(s)}~%")
   (format t "   destroy <name>~%"))
+
+(defmacro print-if-false (test text &rest body)
+  `(if ,test
+     (progn ,@body)
+     (format t ,@text)))
