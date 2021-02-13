@@ -7,6 +7,7 @@
                        :with-object)
   (:export #:*program-dir*
            #:get-streak-namestring
+           #:get-streak-namestrings
            #:parse-json-from-file
            #:encode-json-dom
            #:encode-json-object-elements))
@@ -17,6 +18,14 @@
 
 (defun get-streak-namestring (name)
   (format nil "~A~A.json" *program-dir* name))
+
+(defun join-program-dir (namestring)
+  (format nil "~A~A" *program-dir* namestring))
+
+(defun get-streak-namestrings ()
+  (mapcar #'join-program-dir
+          (mapcar #'file-namestring
+                  (uiop:directory-files *program-dir*))))
 
 (defun parse-json-from-file (namestring)
   (with-open-file (str namestring
