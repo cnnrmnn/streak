@@ -10,7 +10,7 @@
 
 (in-package :create)
 
-(defun to-hours (interval unit)
+(defun to-seconds (interval unit)
   (switch (unit :test #'(lambda (x y)
                           (member x y :test #'string=)))
     ('("hour" "hours") (* interval 3600))
@@ -34,16 +34,16 @@
       (print-if-true (not interval)
                      ("Interval \"~A\" is invalid (must be an integer).~%"
                       (second args))
-        (let ((hour-interval (to-hours interval unit))
+        (let ((seconds-interval (to-seconds interval unit))
               (streak-namestring (get-streak-namestring name)))
-          (print-if-true (not hour-interval) ("Unit \"~A\" is invalid.~%" unit)
+          (print-if-true (not seconds-interval) ("Unit \"~A\" is invalid.~%" unit)
             (print-if-true (probe-file streak-namestring)
                            ("Streak \"~A\" already exists.~%" name)
               (ensure-directories-exist *program-dir*)
               (encode-json-object-elements streak-namestring
                 "name" name
                 "active" t
-                "interval" hour-interval
+                "interval" seconds-interval
                 "unit" (fix-unit unit interval)
                 "created" (get-universal-time)
                 "extended" (get-universal-time)
