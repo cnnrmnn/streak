@@ -5,6 +5,7 @@
   (:import-from :create :create)
   (:import-from :destroy :destroy)
   (:import-from :extend :extend)
+  (:import-from :info :info)
   (:export #:main))
 
 (in-package :streak)
@@ -15,6 +16,7 @@
     (switch (command :test #'string=)
       ("create" (create args))
       ("destroy" (destroy args))
+      ("info" (info args))
       (otherwise
         (print-usage-if-true (or args (not command))
           (extend command))))))

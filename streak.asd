@@ -8,6 +8,7 @@
                                (:file "create")
                                (:file "destroy")
                                (:file "extend")
+                               (:file "info")
                                (:file "streak"))))
   :build-operation "program-op"
   :build-pathname "streak"
