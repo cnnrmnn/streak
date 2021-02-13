@@ -18,6 +18,14 @@
     ('("week" "weeks") (* interval 604800))
     (otherwise nil)))
 
+(defun fix-unit (unit interval)
+  (let ((plural (eql (uiop:last-char unit) #\s))
+        (>1 (> interval 1)))
+    (cond
+      ((and plural (not >1)) (subseq unit 0 (1- (length unit))))
+      ((and >1 (not plural)) (concatenate 'string unit "s"))
+      (t unit))))
+
 (defun create (args)
   (print-usage-if-true (not (= (length args) 3))
     (let ((name (first args))
@@ -33,8 +41,10 @@
                            ("Streak \"~A\" already exists.~%" name)
               (ensure-directories-exist *program-dir*)
               (encode-json-object-elements streak-namestring
+                "name" name
                 "active" t
                 "interval" hour-interval
+                "unit" (fix-unit unit interval)
                 "created" (get-universal-time)
                 "extended" (get-universal-time)
                 "length" 0))))))))
