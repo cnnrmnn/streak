@@ -27,7 +27,7 @@
       (t unit))))
 
 (defun create (args)
-  (print-usage-if-true (not (= (length args) 3))
+  (print-usage-if-true (not (eql (length args) 3))
     (let ((name (first args))
           (interval (ignore-errors (parse-integer (second args))))
           (unit (third args)))
