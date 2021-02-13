@@ -6,6 +6,7 @@
   (:import-from :destroy :destroy)
   (:import-from :extend :extend)
   (:import-from :info :info)
+  (:import-from :all :all)
   (:export #:main))
 
 (in-package :streak)
@@ -17,6 +18,7 @@
       ("create" (create args))
       ("destroy" (destroy args))
       ("info" (info args))
+      ("all" (all args))
       (otherwise
         (print-usage-if-true (or args (not command))
           (extend command))))))
