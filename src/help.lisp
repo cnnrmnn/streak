@@ -23,8 +23,8 @@
        (format t "   <name>~%")
        (format t "   create <name> <interval> {hour(s) | day(s) | week(s)}~%")
        (format t "   destroy <name>~%")
-       (format t "   info <name>~%"))
-       (format t "   all~%")
+       (format t "   info <name>~%")
+       (format t "   all~%"))
      (progn ,@body)))
 
 (defun print-streak-heading ()
@@ -35,7 +35,7 @@
             "interval"
             "unit"
             "created"
-            "extended"))
+            "due"))
 
 (defun format-universal-time (universal-time)
   (let ((decoded-time (multiple-value-list
@@ -68,7 +68,7 @@
           (interval (gethash "interval" streak-ht))
           (unit (gethash "unit" streak-ht))
           (created (gethash "created" streak-ht))
-          (extended (gethash "extended" streak-ht)))
+          (due (gethash "due" streak-ht)))
       (format t "~15A ~6A ~6A ~8A ~6A ~16A ~16A~%"
                  name
                  (format-boolean active)
@@ -76,4 +76,4 @@
                  (to-unit interval unit)
                  unit
                  (format-universal-time created)
-                 (format-universal-time extended)))))
+                 (format-universal-time due)))))

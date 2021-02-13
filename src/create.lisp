@@ -46,5 +46,5 @@
                 "interval" seconds-interval
                 "unit" (fix-unit unit interval)
                 "created" (get-universal-time)
-                "extended" (get-universal-time)
+                "due" (get-universal-time)
                 "length" 0))))))))
