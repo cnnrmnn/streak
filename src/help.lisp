@@ -1,6 +1,7 @@
 (defpackage :help
   (:use :common-lisp)
   (:import-from :alexandria :switch)
+  (:import-from :file :parse-json-from-file)
   (:export #:print-if-true
            #:print-usage-if-true
            #:print-streak-heading
@@ -58,19 +59,20 @@
     ('("week" "weeks") (/ interval 604800))
     (otherwise nil)))
 
-(defun print-streak (streak-ht)
-  (let ((name (gethash "name" streak-ht))
-        (active (gethash "active" streak-ht))
-        (length (gethash "length" streak-ht))
-        (interval (gethash "interval" streak-ht))
-        (unit (gethash "unit" streak-ht))
-        (created (gethash "created" streak-ht))
-        (extended (gethash "extended" streak-ht)))
-    (format t "~15A ~6A ~6A ~8A ~6A ~16A ~16A~%"
-              name
-              (format-boolean active)
-              length
-              (to-unit interval unit)
-              unit
-              (format-universal-time created)
-              (format-universal-time extended))))
+(defun print-streak (streak-namestring)
+  (let ((streak-ht (parse-json-from-file streak-namestring)))
+    (let ((name (gethash "name" streak-ht))
+          (active (gethash "active" streak-ht))
+          (length (gethash "length" streak-ht))
+          (interval (gethash "interval" streak-ht))
+          (unit (gethash "unit" streak-ht))
+          (created (gethash "created" streak-ht))
+          (extended (gethash "extended" streak-ht)))
+      (format t "~15A ~6A ~6A ~8A ~6A ~16A ~16A~%"
+                 name
+                 (format-boolean active)
+                 length
+                 (to-unit interval unit)
+                 unit
+                 (format-universal-time created)
+                 (format-universal-time extended)))))

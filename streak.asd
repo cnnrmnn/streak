@@ -3,12 +3,13 @@
   :license "MIT"
   :depends-on (:alexandria :yason)
   :components ((:module src
-                  :components ((:file "help")
-                               (:file "file")
+                  :components ((:file "file")
+                               (:file "help")
                                (:file "create")
                                (:file "destroy")
                                (:file "extend")
                                (:file "info")
+                               (:file "all")
                                (:file "streak"))))
   :build-operation "program-op"
   :build-pathname "streak"
