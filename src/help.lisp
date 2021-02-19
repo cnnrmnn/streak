@@ -21,7 +21,7 @@
        (format t "   streak <command>~%")
        (format t "commands:~%")
        (format t "   <name>~%")
-       (format t "   create <name> <interval> {hour(s) | day(s) | week(s)}~%")
+       (format t "   create [-m] <name> <interval> {hour(s) | day(s) | week(s)}~%")
        (format t "   destroy <name>~%")
        (format t "   info <name>~%")
        (format t "   all~%"))

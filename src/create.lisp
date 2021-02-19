@@ -26,25 +26,40 @@
       ((and >1 (not plural)) (concatenate 'string unit "s"))
       (t unit))))
 
+(defun parse-args (args)
+  (if (string= (first args) "-m")
+    (values (rest args) t)
+    (values args nil)))
+
+(defun midnight-of-today ()
+  (multiple-value-bind
+           (second minute hour day month year)
+           (get-decoded-time)
+    (encode-universal-time 0 0 0 day month year)))
+
 (defun create (args)
-  (print-usage-if-true (not (eql (length args) 3))
-    (let ((name (first args))
-          (interval (ignore-errors (parse-integer (second args))))
-          (unit (third args)))
-      (print-if-true (not interval)
-                     ("Interval \"~A\" is invalid (must be an integer).~%"
-                      (second args))
-        (let ((seconds-interval (to-seconds interval unit))
-              (streak-namestring (get-streak-namestring name)))
-          (print-if-true (not seconds-interval) ("Unit \"~A\" is invalid.~%" unit)
-            (print-if-true (probe-file streak-namestring)
-                           ("Streak \"~A\" already exists.~%" name)
-              (ensure-directories-exist *program-dir*)
-              (encode-json-object-elements streak-namestring
-                "name" name
-                "active" t
-                "interval" seconds-interval
-                "unit" (fix-unit unit interval)
-                "created" (get-universal-time)
-                "due" (get-universal-time)
-                "length" 0))))))))
+  (multiple-value-bind (rest-args flag) (parse-args args)
+    (print-usage-if-true (not (or (>= (length rest-args) 3)))
+        (let ((name (first rest-args))
+              (interval (ignore-errors (parse-integer (second rest-args))))
+              (unit (third rest-args)))
+          (print-if-true (not interval)
+                         ("Interval \"~A\" is invalid (must be an integer).~%"
+                          (second rest-args))
+            (let ((seconds-interval (to-seconds interval unit))
+                  (streak-namestring (get-streak-namestring name)))
+              (print-if-true (not seconds-interval)
+                             ("Unit \"~A\" is invalid.~%" unit)
+                (print-if-true (probe-file streak-namestring)
+                               ("Streak \"~A\" already exists.~%" name)
+                  (ensure-directories-exist *program-dir*)
+                  (encode-json-object-elements streak-namestring
+                    "name" name
+                    "active" t
+                    "interval" seconds-interval
+                    "unit" (fix-unit unit interval)
+                    "created" (get-universal-time)
+                    "due" (if flag
+                            (midnight-of-today)
+                            (get-universal-time))
+                    "length" 0)))))))))
