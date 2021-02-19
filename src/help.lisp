@@ -76,4 +76,4 @@
                  (to-unit interval unit)
                  unit
                  (format-universal-time created)
-                 (format-universal-time due)))))
+                 (format-universal-time (+ due interval))))))
